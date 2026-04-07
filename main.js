@@ -7,7 +7,7 @@ document.querySelectorAll('.fc').forEach(btn => {
 });
 
 // License modal
-let selectedPrice = 24900;
+let selectedPrice = 999;
 let durMult = 1;
 
 function openLicense(card) {
@@ -23,7 +23,7 @@ function openLicense(card) {
   // Reset
   document.querySelectorAll('.mlc').forEach(m => m.classList.remove('sel'));
   document.querySelectorAll('.mlc')[0].classList.add('sel');
-  selectedPrice = 24900;
+  selectedPrice = 999;
   durMult = 1;
   document.getElementById('dur-label').style.display = 'none';
   document.getElementById('dur-row').style.display = 'none';
