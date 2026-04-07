@@ -1,76 +1,40 @@
-# Visage — Beta Landing Page
+# ModelMe v2 — Beta Landing Page
 
-Licensed human likeness marketplace. This is the static beta waitlist site.
+Getty-style model browse grid + INR pricing + license modal.
 
-## Files
+## Deploy to GitHub Pages (replace your existing files)
 
-```
-visage-beta/
-├── index.html      # Main page
-├── style.css       # All styles
-├── main.js         # Scroll animations + form handler
-└── README.md
-```
-
-## Deploy to GitHub Pages
-
-### Option 1 — Drag & drop (fastest)
-1. Create a new repo at github.com/new — name it `visage-beta` or `yourname.github.io`
-2. Upload all 4 files
-3. Go to **Settings → Pages → Source → Deploy from branch → main / root**
-4. Your site is live at `https://yourusername.github.io/visage-beta`
-
-### Option 2 — Git CLI
 ```bash
-git init
-git add .
-git commit -m "init: Visage beta landing page"
-git branch -M main
-git remote add origin https://github.com/YOUR_USERNAME/visage-beta.git
-git push -u origin main
+# In your ModelMe repo:
+git add index.html style.css main.js
+git commit -m "v2: model grid hero + INR pricing + license modal"
+git push
 ```
-Then enable Pages in repo Settings.
 
-### Option 3 — Vercel (recommended for custom domain)
-```bash
-npm i -g vercel
-vercel
-```
-Point your domain DNS to Vercel and you're live.
+GitHub Pages auto-deploys. Live in ~60 seconds at:
+`https://sagar00j.github.io/ModelMe/`
 
-## Connecting the waitlist form
+## What changed in v2
 
-In `main.js`, find `handleSubmit()` and add your backend call:
+- **Hero is now the model browse grid** — Getty-style 6-column grid, hover reveals name, tags, and pricing
+- **All prices in ₹** — converted at ~83x with Indian number formatting (₹24,900 not $299)
+- **License modal** — click any model card to open license picker with live ₹ price calculation
+- **Filter chips** — by ethnicity, age, use case
+- **Rebranded** — Visage → ModelMe to match your GitHub repo name
 
-### Airtable (simplest)
+## Connecting a real waitlist backend
+
+In `main.js`, add to `handleSubmit()`:
+
 ```js
-await fetch('https://api.airtable.com/v0/YOUR_BASE_ID/Waitlist', {
+// Airtable example
+const data = new FormData(e.target);
+await fetch('https://api.airtable.com/v0/YOUR_BASE/Waitlist', {
   method: 'POST',
-  headers: {
-    'Authorization': 'Bearer YOUR_AIRTABLE_TOKEN',
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify({
-    fields: {
-      Name: formData.get('name'),
-      Email: formData.get('email'),
-      Company: formData.get('company'),
-      Type: formData.get('type'),
-      Notes: formData.get('notes'),
-    }
-  })
+  headers: { 'Authorization': 'Bearer YOUR_KEY', 'Content-Type': 'application/json' },
+  body: JSON.stringify({ fields: { Name: data.get('name'), Email: data.get('email') } })
 });
 ```
 
-### Notion API / Formspree / Mailchimp
-Works the same way — swap the fetch URL and payload shape.
-
-## Customisation
-
-- Colors: all in `style.css` under `:root` — change `--gold` to your brand accent
-- Stats: update the hero proof numbers in `index.html`
-- Pricing: update license card prices in the `#licenses` section
-- Logo: replace `Vis<span>age</span>` with your actual logo SVG
-
 ## License
-Private — Visage 2025
+Private — ModelMe 2025
